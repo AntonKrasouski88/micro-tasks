@@ -13,9 +13,8 @@ type CarPropertyType = {
 export const TopCars = (props: TopCarsType) => {
     return (<table>
         {props.CarModel.map((item, i) => {
-            return(<tr>
-                <th key={i}><span>{item.manufacturer}</span></th>
-                <th key={i}><span>{item.model}</span></th>
+            return (<tr>
+                <th key={i}>{item.manufacturer} {item.model}</th>
             </tr>)
         })}
     </table>)
