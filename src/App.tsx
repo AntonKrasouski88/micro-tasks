@@ -3,7 +3,7 @@ import './App.css';
 import {TopCars} from "./Components/TopCars";
 import {Button} from "./Components/Button";
 import {HookButton} from "./Components/HookButton";
-import {observe} from "web-vitals/dist/modules/lib/observe";
+import {MoneyComponent} from "./Components/MoneyComponent";
 
 
 //import {MouseEvent} from "react";
@@ -15,16 +15,6 @@ function App() {
         {manufacturer: 'Mercedes', model: 'e63s'},
         {manufacturer: 'Audi', model: 'rs6'}
     ];
-    const [money, setMoney] = useState([
-        {banknots: 'Dollars', value: 100, number: ' a1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' z1234567890'},
-        {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
-        {banknots: 'Dollars', value: 100, number: ' e1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' c1234567890'},
-        {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' x1234567890'},
-        {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
-    ]);
     /*    const myFirstSubscriber = () => {
             return (
                 console.log('Hello Im Anna!')
@@ -57,6 +47,32 @@ function App() {
         console.log(text)
     }
 
+    type filterType ='All' | 'Dollars' | 'RUBLS'
+    const [money, setMoney] = useState([
+        {banknots: 'Dollars', value: 100, number: ' a1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' z1234567890'},
+        {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
+        {banknots: 'Dollars', value: 100, number: ' e1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' c1234567890'},
+        {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' x1234567890'},
+        {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+    ]);
+
+    const [filter, setFilter] = useState("All")
+
+    let currentMoney = money;
+    if (filter === "RUBLS") {
+        currentMoney = money.filter((money) => money.banknots === 'RUBLS')
+    } else if (filter === "Dollars") {
+        currentMoney = money.filter((money) => money.banknots === 'Dollars')
+    }
+
+
+    let onFilterHandler = (nameButton: filterType) => {
+        setFilter(nameButton)
+    }
+
     return (
         <div className="App">
             <HookButton/>
@@ -64,17 +80,7 @@ function App() {
             <Button name={"MyYoutubeChanel - 1"} callBack={() => button1('Hello my friends', 21)}/>
             <Button name={"MyYoutubeChanel - 2"} callBack={() => button2('This is the best button', 22)}/>
             <Button name={"Fanny button"} callBack={() => button3('Im stupid Button')}/>
-            <ul>
-                {money.map((objMoney, num) => {
-                    return (
-                        <li key ={num}>
-                            <span> {objMoney.banknots}</span>
-                            <span> {objMoney.value}</span>
-                            <span> {objMoney.number}</span>
-                        </li>
-                    )
-                })}
-            </ul>
+            <MoneyComponent currentMoney={money} onFilterHandler={()=>onFilterHandler("All")} />
             {/*<div>
             <button onClick={() => onClickName('Dima')}>MyYoutubeChanel - 1</button>
             <button onClick={() => onClickName('Anna')}>MyYoutubeChanel - 2</button>
