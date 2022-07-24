@@ -11,11 +11,21 @@ type CarPropertyType = {
 
 
 export const TopCars = (props: TopCarsType) => {
-    return (<table>
-        {props.CarModel.map((item, i) => {
-            return (<tr>
-                <th key={i}>{item.manufacturer} {item.model}</th>
-            </tr>)
-        })}
-    </table>)
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                </tr>
+            </thead>
+            <tbody>
+                 {props.CarModel.map((item, i) => {
+                     return (<tr key={i}>
+                    <td>{item.manufacturer}</td>
+                    <td>{item.model}</td>
+                </tr>)
+            })}
+            </tbody>
+        </table>)
 };
