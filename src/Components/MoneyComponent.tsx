@@ -1,14 +1,15 @@
 import React from 'react';
+import {filterType} from "../App";
 
 type MoneyComponentType = {
-    onFilterHandler: ()=>void
-    currentMoney: Array<money>
+    onFilterHandler: (type:filterType)=>void;
+    currentMoney: Array<money>;
 }
 
 type money = {
-    banknots: string,
-    value: number,
-    number: string
+    banknots: string;
+    value: number;
+    number: string;
 }
 
 
@@ -27,9 +28,9 @@ export const MoneyComponent = (props:MoneyComponentType) => {
                     )
                 })}
             </ul>
-            <button onClick={props.onFilterHandler}>ALL</button>
-            <button onClick={props.onFilterHandler}>RUBLS</button>
-            <button onClick={props.onFilterHandler}>Dollars</button>
+            <button onClick={() => {props.onFilterHandler ("All")}}>ALL</button>
+            <button onClick={() => {props.onFilterHandler ("RUBLS")}}>RUBLS</button>
+            <button onClick={() => {props.onFilterHandler ("Dollars")}}>Dollars</button>
             {/*<button onClick={() => onFilterHandler("Dollars")}></button>*/}
         </div>
     );

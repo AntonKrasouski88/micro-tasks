@@ -4,10 +4,14 @@ import {TopCars} from "./Components/TopCars";
 import {Button} from "./Components/Button";
 import {HookButton} from "./Components/HookButton";
 import {MoneyComponent} from "./Components/MoneyComponent";
+import {Message} from "./Components/Message";
+import {Input} from "./Components/Input";
+import {ButtonInput} from "./Components/ButtonInput";
+
 
 
 //import {MouseEvent} from "react";
-
+export type filterType ='All' | 'Dollars' | 'RUBLS'
 function App() {
 
     const topCars = [
@@ -47,8 +51,8 @@ function App() {
         console.log(text)
     }
 
-    type filterType ='All' | 'Dollars' | 'RUBLS'
-    const [money, setMoney] = useState([
+
+    const money = [
         {banknots: 'Dollars', value: 100, number: ' a1234567890'},
         {banknots: 'Dollars', value: 50, number: ' z1234567890'},
         {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
@@ -57,21 +61,41 @@ function App() {
         {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
         {banknots: 'Dollars', value: 50, number: ' x1234567890'},
         {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
-    ]);
+    ]
 
     const [filter, setFilter] = useState("All")
 
-    let currentMoney = money;
-    if (filter === "RUBLS") {
-        currentMoney = money.filter((money) => money.banknots === 'RUBLS')
-    } else if (filter === "Dollars") {
-        currentMoney = money.filter((money) => money.banknots === 'Dollars')
-    }
 
+    let currentMoney;
+    if (filter === "RUBLS") {
+        currentMoney = money.filter((value) => value.banknots === 'RUBLS')
+    } else if (filter === "Dollars") {
+        currentMoney = money.filter((value) => value.banknots === 'Dollars')
+    } else {currentMoney = money}
 
     let onFilterHandler = (nameButton: filterType) => {
         setFilter(nameButton)
     }
+
+    //lesson input
+    let [message, setMessage] = useState( [
+        {message: "message 1"},
+        {message: "message 2"},
+        {message: "message 3"},
+    ])
+
+    function addMessage (title:string) {
+        let newMessage = [{message: title},...message];
+        setMessage(newMessage);
+    }
+    const [title,setTitle] = useState("");
+    const callBackButtonHandler = () => {
+        addMessage(title);
+        setTitle("")
+    }
+
+
+
 
     return (
         <div className="App">
@@ -80,7 +104,17 @@ function App() {
             <Button name={"MyYoutubeChanel - 1"} callBack={() => button1('Hello my friends', 21)}/>
             <Button name={"MyYoutubeChanel - 2"} callBack={() => button2('This is the best button', 22)}/>
             <Button name={"Fanny button"} callBack={() => button3('Im stupid Button')}/>
-            <MoneyComponent currentMoney={money} onFilterHandler={()=>onFilterHandler("All")} />
+            <MoneyComponent currentMoney={currentMoney}
+                            onFilterHandler={onFilterHandler} />
+            {/*<Message message={message} addMessage = {addMessage}/>*/}
+            <div>
+                <Input setTitle = {setTitle} title = {title}/>
+                <ButtonInput name={"+"} callBack={callBackButtonHandler}/>
+                {message.map((value, index) => {
+                return <div key ={index}>
+            {value.message}
+                </div>})}
+            </div>
             {/*<div>
             <button onClick={() => onClickName('Dima')}>MyYoutubeChanel - 1</button>
             <button onClick={() => onClickName('Anna')}>MyYoutubeChanel - 2</button>
